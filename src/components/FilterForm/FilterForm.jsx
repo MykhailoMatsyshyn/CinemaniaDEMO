@@ -1,12 +1,34 @@
 import css from "./FilterForm.module.css";
 
 export default function FilterForm({ onSubmit }) {
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     const query = e.target.elements.searchQuery.value.trim();
-  //     if (!query) return;
-  //     onSubmit(query);
-  //   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const query = e.target.elements.searchMovie.value.trim();
+    if (!query) return;
+    // onSubmit(query);
+    console.log(query);
+  };
+
+  const handleSubmitFilter = (e) => {
+    e.preventDefault();
+    const genre = e.target.elements.genreForm.value;
+    const year = e.target.elements.yearForm.value;
+    const sort = e.target.elements.sortForm.value;
+
+    // if (genre === "start" && year === "start" && sort === "start") return; // ??
+
+    const formData = {
+      genre: genre !== "start" ? genre : undefined,
+      year: year !== "start" ? year : undefined,
+      sort: sort !== "start" ? sort : undefined,
+    };
+
+    if (formData.query || formData.genre || formData.year || formData.sort) {
+      // onSubmit(formData);
+    }
+    // onSubmit(query);
+    console.log(formData);
+  };
 
   return (
     <div className={css.formContainer}>
@@ -15,12 +37,16 @@ export default function FilterForm({ onSubmit }) {
         <button type="submit">Search</button>
       </form> */}
 
-      <form className="header__search-form" id="search-form">
+      <form
+        onSubmit={handleSubmit}
+        className="header__search-form"
+        id="search-form"
+      >
         <input
           className="header__input"
           type="text"
           name="searchMovie"
-        //   autocomplete="off"
+          //   autocomplete="off"
           placeholder="Movie search"
         />
         <button type="submit" className="header__search-button">
@@ -30,7 +56,11 @@ export default function FilterForm({ onSubmit }) {
           <span className="visually-hidden">search</span>
         </button>
       </form>
-      <form className="filter_form" id="filter-form">
+      <form
+        onSubmit={handleSubmitFilter}
+        className="filter_form"
+        id="filter-form"
+      >
         <select className="filter_form__select" name="genreForm" id="genreForm">
           <option value="start">Genre</option>
           <option value="28">Action</option>

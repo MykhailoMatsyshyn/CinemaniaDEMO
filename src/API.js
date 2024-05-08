@@ -28,6 +28,62 @@ export const getUpcomingMovies = async () => {
   return response.data;
 };
 
+/**************/
+
+export const getSearchMovie = async (query, page) => {
+  const { data } = await axios.get(
+    `/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}`
+  );
+  return data;
+};
+
+export const getSearchForm = async (
+  page = "",
+  query = "",
+  genre = "",
+  year = "",
+  sort = ""
+) => {
+  let f = {
+    year:
+      year !== "" && year !== "start" ? `&primary_release_year=${year}` : "",
+    genre: genre !== "" && genre !== "start" ? `&with_genres=${genre}` : "",
+    queryFetch: `&query=${query}`,
+    sort: sort !== "" && sort !== "start" ? `&sort_by=${sort}` : "",
+    discover: `/trending`,
+    week: `/week`,
+  };
+
+  console.log(f);
+
+  if (query === "") {
+    f.queryFetch = "";
+  }
+  if (query !== "" && genre === "") {
+    f.discover = "/search";
+    f.week = "";
+  }
+  if (query === "" && genre !== "") {
+    f.discover = "/discover";
+    f.week = "";
+  }
+  if (query === "" && year !== "") {
+    f.discover = "/discover";
+    f.week = "";
+  }
+  let { data } = await axios.get(
+    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=en-US${f.queryFetch}&page=${page}`
+  );
+
+  console.log(
+    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=en-US${f.queryFetch}&page=${page}`
+  );
+
+  console.log(data.results);
+
+  return data;
+};
+
 /*******************************************************************************/
 
 export const getMovieSearch = async (moviesFilter) => {
