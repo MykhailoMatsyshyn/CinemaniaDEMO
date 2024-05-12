@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { getTrendingMovies } from "../../API";
 
-import MovieList from "../../components/MovieList/MovieList";
-
-
+import css from "./TrandingMoviesList.module.scss";
+import Carousel from "../Carousel/Carousel.jsx";
 export default function MoviesList() {
   //   const [isError, setError] = useState(false);
   //   const [isLoading, setLoading] = useState(false);
@@ -27,11 +26,11 @@ export default function MoviesList() {
   }, []);
 
   return (
-    <div>
-      <h1>Trending today</h1>
+    <div className={css.trend}>
+      <div className={css.trend__title}>Trending today</div>
       {/* {isLoading && <Loader />} */}
       {/* {isError && <ErrorMessage />} */}
-      {movies.length > 0 && <MovieList movies={movies} />}
+      {movies.length > 0 && <Carousel movies={movies} />}
     </div>
   );
 }

@@ -3,15 +3,17 @@ import MoviesCatalog from "../../components/MoviesCatalog/MoviesCatalog";
 // import Pagination from "../../components/Pagination/Pagination";
 import TrandingMoviesList from "../../components/TrandingMoviesList/TrandingMoviesList";
 import UpcomingMoviesList from "../../components/UpcomingMoviesList/UpcomingMoviesList";
-
+import css from "./HomePage.module.scss"
 export default function HomePage() {
-  return (
-    <div>
-      <TrandingMoviesList />
-      <hr />
-      <MoviesCatalog />
-      <hr />
-      <UpcomingMoviesList />
-    </div>
-  );
+    return (
+        <div className={css.home}>
+            <div className="container">
+                <TrandingMoviesList/>
+                <hr/>
+                <MoviesCatalog/>
+                <hr/>
+                <UpcomingMoviesList/>
+            </div>
+        </div>
+    );
 }

@@ -1,0 +1,32 @@
+.list{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.item {
+  flex: 1 0 21%; /* Кожен елемент займатиме близько 21% контейнера */
+  display: flex;
+  flex-direction: column;
+
+}
+
+.img {
+  width: 100%; /* Змушує зображення заповнювати доступний горизонтальний простір */
+  height: auto;
+}
+.poster-list__wrap {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex: 1 0 46%; /* Два елемента в ряду для планшетів і мобільних */
+  }
+}
+@media (max-width: 480px) {
+  .item {
+    flex: 1 0 100%; /* Один елемент в ряду для дуже малих екранів */
+  }
+}

@@ -1,0 +1,9 @@
+.trend{
+  &__title{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    color: var(--white);
+  }
+}
