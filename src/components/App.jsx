@@ -9,14 +9,7 @@ const MyLibraryPage = lazy(() =>
   import("../pages/MyLibraryPage/MyLibraryPage")
 );
 
-import { selectMovies } from "../redux/movies/selectors";
-import { useSelector } from "react-redux";
-
 function App() {
-  console.log("--------------------");
-  console.log(useSelector(selectMovies));
-  console.log("--------------------");
-
   return (
     <>
       <Layout>
@@ -24,7 +17,6 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/library" element={<MyLibraryPage />} />
-
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>

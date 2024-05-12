@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import moviesReducer from "./movies/slice";
 import filtersReducer from "./filters/slice";
+import libraryReducer from "./library/slice";
 
 import {
   persistStore,
@@ -29,6 +30,7 @@ export const store = configureStore({
   reducer: {
     movies: persistedMoviesReducer,
     filters: filtersReducer,
+    library: libraryReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
