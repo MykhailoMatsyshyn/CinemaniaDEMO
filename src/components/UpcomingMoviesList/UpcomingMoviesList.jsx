@@ -30,7 +30,7 @@ export default function MoviesList() {
       <h1>Upcoming</h1>
       {/* {isLoading && <Loader />} */}
       {/* {isError && <ErrorMessage />} */}
-      {movies.length > 0 && <MovieList movies={movies} />}
+      {movies.length > 0 && <MovieList movies={movies} info="upcoming" />}
     </div>
   );
 }

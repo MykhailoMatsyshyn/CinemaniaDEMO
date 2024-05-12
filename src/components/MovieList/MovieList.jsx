@@ -3,34 +3,60 @@ import css from "./MovieList.module.css";
 
 /*======================================================================*/
 
-export default function MovieList({ movies }) {
+export default function MovieList({ movies, info }) {
   const location = useLocation();
 
-  const defaultImg =
-    "<https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg>";
+  // const defaultImg = "../../images/keep-calm-poster-not-found-1.png";
+
+  console.log(movies);
 
   return (
     <ul className={css.list}>
-      {movies.map(({ title, id, poster_path }) => (
-        <li key={id} className={css.item}>
-          <Link
-            to={`/movies/${id}`}
-            state={{ from: location }}
-            className={css.link}
-          >
-            <img
-              src={
-                poster_path
-                  ? `https://image.tmdb.org/t/p/w200/${poster_path}`
-                  : defaultImg
-              }
-              alt={title}
-              className={css.img}
-            />
-            <h3>{title}</h3>
-          </Link>
-        </li>
-      ))}
+      {movies.map(
+        ({
+          original_title,
+          id,
+          poster_path,
+          release_date,
+          genre_ids,
+          vote_average,
+        }) => (
+          <li key={id} className={css.item}>
+            <Link
+              to={`/movies/${id}`}
+              state={{ from: location }}
+              className={css.link}
+            >
+              <img
+                src={
+                  poster_path
+                    ? `https://image.tmdb.org/t/p/w200/${poster_path}`
+                    : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
+                }
+                alt={original_title}
+                className={css.img}
+                width={200}
+                height={300}
+              />
+              {info !== "upcoming" && (
+                <span className="poster-list__rate">
+                  {vote_average.toFixed(1)}
+                </span>
+              )}
+              <div className="poster-list__wrap">
+                <h2>{original_title}</h2>
+                <div className="poster-list__info"></div>
+                {info === "upcoming" && <p>{release_date}</p>}
+                {info === "catalog" && (
+                  <p>
+                    {genre_ids} | {release_date.substring(0, 4)}
+                  </p>
+                )}
+              </div>
+            </Link>
+          </li>
+        )
+      )}
     </ul>
   );
 }
