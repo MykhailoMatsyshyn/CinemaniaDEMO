@@ -1,148 +1,125 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setPage } from "../../redux/actions";
+import css from "./Pagination.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../redux/filters/slice";
+import {
+  selectCurrentPage,
+  selectTotalPage,
+} from "../../redux/filters/selectors";
 
-function Pagination() {
-  const { currentPage, totalPages } = useSelector((state) => state.pagination);
+const Pagination = () => {
   const dispatch = useDispatch();
+  const total_pages = useSelector(selectTotalPage);
+  const current_page = useSelector(selectCurrentPage);
 
-  const onPageChange = (page) => {
-    dispatch(setPage(page));
+  const goToPage = (page) => {
+    dispatch(setCurrentPage(page));
   };
 
-  return (
-    <section className="pagination-section">
-      <button
-        className="page-btn prev"
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
-      >
-        Prev
-      </button>
-      <ul className="pagination-btns">
-        {/* Тут можна додати динамічну пагінацію в залежності від загальної кількості сторінок */}
-        <li
-          className={currentPage === 1 ? "page active" : "page"}
-          onClick={() => onPageChange(1)}
-        >
-          1
-        </li>
-        {currentPage > 1 && (
-          <li onClick={() => onPageChange(currentPage)}>...</li>
-        )}
-        {currentPage}
-        {currentPage < totalPages && (
-          <li onClick={() => onPageChange(totalPages)}>...</li>
-        )}
-        <li
-          className={currentPage === totalPages ? "page active" : "page"}
-          onClick={() => onPageChange(totalPages)}
-        >
-          {totalPages}
-        </li>
-      </ul>
-      <button
-        className="page-btn next"
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
-      >
-        Next
-      </button>
-    </section>
+const paginationItems = () => {
+  const pages = [];
+
+  // Завжди показуємо першу сторінку
+  pages.push(
+    <li
+      key={1}
+      className={current_page === 1 ? css.PageActive : ""}
+      onClick={() => goToPage(1)}
+    >
+      1
+    </li>
   );
-}
+
+  // Визначення діапазонів для пагінації
+  let startPage, endPage;
+  if (current_page <= 3) {
+    // Якщо поточна сторінка від 1 до 3
+    startPage = 2;
+    endPage = Math.min(5, total_pages - 1);
+  } else if (current_page > 3 && current_page < total_pages - 2) {
+    // Поточна сторінка десь посередині
+    startPage = current_page - 2;
+    endPage = current_page + 2;
+    pages.push(
+      <li key="dots1" className="dots">
+        ...
+      </li>
+    );
+  } else {
+    // Поточна сторінка одна з останніх трьох
+    startPage = total_pages - 4;
+    endPage = total_pages - 1;
+    pages.push(
+      <li key="dots1" className="dots">
+        ...
+      </li>
+    );
+  }
+
+  // Генерування сторінок між startPage і endPage
+  for (let page = startPage; page <= endPage; page++) {
+    pages.push(
+      <li
+        key={page}
+        className={current_page === page ? css.PageActive : ""}
+        onClick={() => goToPage(page)}
+      >
+        {page}
+      </li>
+    );
+  }
+
+  // Многоточчя перед останньою сторінкою, якщо потрібно
+  if (endPage < total_pages - 1) {
+    pages.push(
+      <li key="dots2" className="dots">
+        ...
+      </li>
+    );
+  }
+
+  // Завжди показуємо останню сторінку
+  pages.push(
+    <li
+      key={total_pages}
+      className={current_page === total_pages ? css.PageActive : ""}
+      onClick={() => goToPage(total_pages)}
+    >
+      {total_pages}
+    </li>
+  );
+
+  return pages;
+};
+
+  return (
+    <div>
+      {current_page > 1 && (
+        <button
+          className="page-btn prev"
+          onClick={() => goToPage(current_page - 1)}
+        >
+          <img
+            src="./images/arrow-left.svg"
+            className="arrow prev"
+            alt="arrow prev"
+          />
+        </button>
+      )}
+      <ul className="pagination-btns">{paginationItems()}</ul>
+      {current_page < total_pages && (
+        <button
+          className="page-btn next"
+          onClick={() => goToPage(current_page + 1)}
+        >
+          <img
+            src="./images/arrow-right.svg"
+            className="arrow next"
+            alt="arrow next"
+          />
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default Pagination;
-
-// function Pagination({ currentPage, totalPages, onPageChange }) {
-// //   const handlePrevious = () => {
-// //     if (currentPage > 1) {
-// //       onPageChange(currentPage - 1);
-// //     }
-// //   };
-
-// //   const handleNext = () => {
-// //     if (currentPage < totalPages) {
-// //       onPageChange(currentPage + 1);
-// //     }
-// //   };
-
-// //   const handlePageClick = (page) => {
-// //     onPageChange(page);
-// //   };
-
-//     return (
-//       <section className="pagination-section">
-//         {/* <h2 className="visually-hidden">pagination</h2> */}
-//         <button className="page-btn prev">
-//           <img
-//             src="./images/arrow-left.svg"
-//             className="arrow prev"
-//             alt="arrow prev"
-//           />
-//         </button>
-//         <ul className="pagination-btns">
-//           <li className="page is-hidden">1</li>
-//           <li className="dots is-hidden">...</li>
-//           <li className="page active">1</li>
-//           <li className="page">2</li>
-//           <li className="page">3</li>
-//           <li className="page">4</li>
-//           <li className="page">5</li>
-//           <li className="dots">...</li>
-//           <li className="page">20</li>
-//         </ul>
-//         <button className="page-btn next">
-//           <img
-//             src="./images/arrow-left.svg"
-//             className="arrow next"
-//             alt="arrow next"
-//           />
-//         </button>
-//       </section>
-//       // <section className="pagination-section">
-//       //   <h2 className="visually-hidden">Pagination</h2>
-//       //   <button className="page-btn prev" onClick={handlePrevious}>
-//       //     <img
-//       //       src="./images/arrow-left.svg"
-//       //       className="arrow prev"
-//       //       alt="Previous page"
-//       //     />
-//       //   </button>
-//       //   <ul className="pagination-btns">
-//       //     {currentPage > 1 && (
-//       //       <li className="page" onClick={() => handlePageClick(1)}>
-//       //         1
-//       //       </li>
-//       //     )}
-//       //     {currentPage > 3 && <li className="dots">...</li>}
-//       //     {Array.from({ length: 5 }, (_, i) => i + Math.max(currentPage - 2, 1))
-//       //       .slice(0, currentPage + 2 > totalPages ? totalPages : undefined)
-//       //       .map((pageNumber) => (
-//       //         <li
-//       //           key={pageNumber}
-//       //           className={`page ${currentPage === pageNumber ? "active" : ""}`}
-//       //           onClick={() => handlePageClick(pageNumber)}
-//       //         >
-//       //           {pageNumber}
-//       //         </li>
-//       //       ))}
-//       //     {currentPage < totalPages - 2 && <li className="dots">...</li>}
-//       //     {currentPage < totalPages && (
-//       //       <li className="page" onClick={() => handlePageClick(totalPages)}>
-//       //         {totalPages}
-//       //       </li>
-//       //     )}
-//       //   </ul>
-//       //   <button className="page-btn next" onClick={handleNext}>
-//       //     <img
-//       //       src="./images/arrow-right.svg"
-//       //       className="arrow next"
-//       //       alt="Next page"
-//       //     />
-//       //   </button>
-//       // </section>
-//     );
-// }
-
-// export default Pagination;
