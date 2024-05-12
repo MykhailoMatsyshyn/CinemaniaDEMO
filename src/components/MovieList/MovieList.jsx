@@ -30,7 +30,7 @@ export default function MovieList({ movies, info }) {
               <img
                 src={
                   poster_path
-                    ? `https://image.tmdb.org/t/p/w200/${poster_path}`
+                    ? `https://image.tmdb.org/t/p/w400/${poster_path}`
                     : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
                 }
                 alt={original_title}
