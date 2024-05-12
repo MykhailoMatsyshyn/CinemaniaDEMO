@@ -1,4 +1,4 @@
-import css from "./LibrarySwitcher.module.css";
+import css from "./LibrarySwitcher.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../../redux/library/slice";
 
@@ -7,24 +7,20 @@ export default function LibrarySwitcher() {
   const activeTab = useSelector((state) => state.library.activeTab);
 
   return (
-    <ul className="header__list-button">
-      <li className="header__item-button">
+    <ul className={css.switch}>
+      <li>
         <button
           type="button"
-          className={`button ${
-            activeTab === "WATCHED" ? "button--current" : ""
-          } btn--watched`}
+          className={css.switch__button}
           onClick={() => dispatch(setActiveTab("WATCHED"))}
         >
           WATCHED
         </button>
       </li>
-      <li className="header__item-button">
+      <li>
         <button
           type="button"
-          className={`button ${
-            activeTab === "QUEUE" ? "button--current" : ""
-          } btn--queue`}
+          className={css.switch__button}
           onClick={() => dispatch(setActiveTab("QUEUE"))}
         >
           QUEUE

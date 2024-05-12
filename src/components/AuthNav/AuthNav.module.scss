@@ -1,0 +1,26 @@
+.auth{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--white);
+
+  &__item{
+    width: 62px;
+    height: 22px;
+    border-radius: 7px;
+    border: 2px solid var(--dark-red);
+    &:hover{
+      background: var(--dark-red);
+    }
+    margin-left: 20px;
+  }
+  &__button{
+    color: var(--white);
+  }
+}
