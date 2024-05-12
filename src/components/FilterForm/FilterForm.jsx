@@ -1,4 +1,12 @@
 import css from "./FilterForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeFilter,
+  changeGenre,
+  changeYear,
+  changeSorting,
+} from "../../redux/filters/slice";
+import { selectNameFilter } from "../../redux/filters/selectors";
 
 export default function FilterForm({ onSubmit }) {
   const handleSubmit = (e) => {
@@ -29,6 +37,43 @@ export default function FilterForm({ onSubmit }) {
     // onSubmit(query);
     console.log(formData);
   };
+  /************************************************ */
+  const dispatch = useDispatch();
+  const { value } = useSelector(selectNameFilter);
+
+  const handleChange = (e) => {
+    console.log("=========== handleChange ===========");
+    console.log(e.target.value.trim());
+    // console.log(e.target.elements.searchMovie.value);
+    dispatch(changeFilter(e.target.value.trim()));
+    console.log("=============================");
+  };
+
+  const handleGenreChange = (e) => {
+    console.log("=========== handleGenreChange ===========");
+    console.log(e.target.value);
+
+    dispatch(changeGenre(e.target.value));
+    console.log("=============================");
+  };
+
+  const handleYearChange = (e) => {
+    console.log("=========== handleYearChange ===========");
+    console.log(e.target.value);
+
+    dispatch(changeYear(e.target.value));
+    console.log("=============================");
+  };
+
+  const handleSortingChange = (e) => {
+    console.log("=========== handleSortingChange ===========");
+    console.log(e.target.value);
+
+    dispatch(changeSorting(e.target.value));
+    console.log("=============================");
+  };
+
+  /************************************************ */
 
   return (
     <div className={css.formContainer}>
@@ -48,6 +93,8 @@ export default function FilterForm({ onSubmit }) {
           name="searchMovie"
           //   autocomplete="off"
           placeholder="Movie search"
+          value={value}
+          onChange={handleChange}
         />
         <button type="submit" className="header__search-button">
           <svg className="header__search-icon" width="12" height="12">
@@ -56,12 +103,18 @@ export default function FilterForm({ onSubmit }) {
           <span className="visually-hidden">search</span>
         </button>
       </form>
+
       <form
         onSubmit={handleSubmitFilter}
         className="filter_form"
         id="filter-form"
       >
-        <select className="filter_form__select" name="genreForm" id="genreForm">
+        <select
+          onChange={handleGenreChange}
+          className="filter_form__select"
+          name="genreForm"
+          id="genreForm"
+        >
           <option value="start">Genre</option>
           <option value="28">Action</option>
           <option value="12">Adventure</option>
@@ -84,7 +137,12 @@ export default function FilterForm({ onSubmit }) {
           <option value="37">Western</option>
         </select>
 
-        <select className="filter_form__select" name="yearForm" id="yearForm">
+        <select
+          onChange={handleYearChange}
+          className="filter_form__select"
+          name="yearForm"
+          id="yearForm"
+        >
           <option value="start">Year</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
@@ -106,7 +164,12 @@ export default function FilterForm({ onSubmit }) {
           <option value="2005">2005</option>
         </select>
 
-        <select className="filter_form__select" name="sortForm" id="sortForm">
+        <select
+          onChange={handleSortingChange}
+          className="filter_form__select"
+          name="sortForm"
+          id="sortForm"
+        >
           <option value="start">Sorting</option>
           <option value="popularity.desc">Popularity (decreasing)</option>
           <option value="popularity.asc">Popularity (increasing)</option>

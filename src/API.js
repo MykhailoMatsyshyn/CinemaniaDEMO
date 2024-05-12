@@ -11,7 +11,7 @@ const options = {
 };
 
 export const getPopularMovies = async () => {
-  const url = "/movie/popular?language=uk-UA&page=1";
+  const url = "/movie/popular?language=en-US&page=1";
   const response = await axios.get(url, options);
   return response.data;
 };
@@ -86,8 +86,14 @@ export const getSearchForm = async (
 
 /*******************************************************************************/
 
-export const getMovieSearch = async (moviesFilter) => {
-  const url = `/search/movie?query=${moviesFilter}&include_adult=false&language=en-US&page=1`;
+// export const getMovieSearch = async (moviesFilter) => {
+//   const url = `/search/movie?query=${moviesFilter}&include_adult=false&language=en-US&page=1`;
+//   const response = await axios.get(url, options);
+//   return response.data.results;
+// };
+
+export const getMovieSearch = async (moviesFilter, page) => {
+  const url = `/search/movie?query=${moviesFilter}&include_adult=false&language=en-US&page=${page}`;
   const response = await axios.get(url, options);
   return response.data.results;
 };
