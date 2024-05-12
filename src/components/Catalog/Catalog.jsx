@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MoviesList from "../MovieList/MovieList";
 import {
   selectNameFilter,
   selectGenreFilter,
   selectYearFilter,
   selectSortingFilter,
+  selectCurrentPage,
 } from "../../redux/filters/selectors";
 import { getSearchForm } from "../../API";
+import { setTotalPages } from "../../redux/filters/slice";
 
 const Catalog = () => {
+  const dispatch = useDispatch();
+
   const [movies, setMovies] = useState([]);
 
   const query = useSelector(selectNameFilter);
   const genre = useSelector(selectGenreFilter);
   const year = useSelector(selectYearFilter);
   const sort = useSelector(selectSortingFilter);
+  const page = useSelector(selectCurrentPage);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         // setLoading(true);
         console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
-        const page = "";
+        // const page = "";
         // const query = "";
         // const genre = "";
         // const year = "";
@@ -31,8 +36,8 @@ const Catalog = () => {
         console.log(dataMovie);
         console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
 
-        // console.log(data);
         setMovies(dataMovie.results);
+        dispatch(setTotalPages(dataMovie.total_pages));
       } catch (error) {
         // setError(true);
       } finally {
@@ -41,7 +46,7 @@ const Catalog = () => {
     };
 
     fetchMovies();
-  }, [query, genre, year, sort]);
+  }, [query, genre, year, sort, page, dispatch]);
 
   return (
     <div>

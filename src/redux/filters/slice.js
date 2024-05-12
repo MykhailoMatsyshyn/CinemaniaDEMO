@@ -3,12 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const filtersSlice = createSlice({
   name: "filters",
   initialState: {
+    current_page: 1,
+    total_pages: 0,
+    total_results: 0,
     name: "",
     genre: "",
     year: "",
     sorting: "",
   },
   reducers: {
+    setCurrentPage(state, action) {
+      state.current_page = action.payload;
+    },
+    setTotalPages(state, action) {
+      state.total_pages = action.payload;
+    },
+    setTotalResults(state, action) {
+      state.total_results = action.payload;
+    },
     changeFilter(state, action) {
       state.name = action.payload;
     },
@@ -21,9 +33,20 @@ const filtersSlice = createSlice({
     changeSorting(state, action) {
       state.sorting = action.payload !== "start" ? action.payload : "";
     },
+    changeCurrentPages(state, action) {
+      state.current_page = action.payload;
+    },
   },
 });
 
-export const { changeFilter, changeGenre, changeYear, changeSorting } =
-  filtersSlice.actions;
+export const {
+  setCurrentPage,
+  setTotalPages,
+  setTotalResults,
+  changeFilter,
+  changeGenre,
+  changeYear,
+  changeSorting,
+  changeCurrentPages,
+} = filtersSlice.actions;
 export default filtersSlice.reducer;

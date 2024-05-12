@@ -1,9 +1,4 @@
 export const selectNameFilter = (state) => {
-  // console.log("state:");
-  // console.log(state);
-  // console.log(state.filters);
-  // console.log(state.filters.name);
-  // console.log("==============");
   return state.filters.name;
 };
 
@@ -17,4 +12,12 @@ export const selectYearFilter = (state) => {
 
 export const selectSortingFilter = (state) => {
   return state.filters.sorting;
+};
+
+export const selectCurrentPage = (state) => {
+  return state.filters.current_page;
+};
+
+export const selectTotalPage = (state) => {
+  return state.filters.total_pages;
 };
