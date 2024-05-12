@@ -26,11 +26,15 @@ export default function MoviesList() {
   }, []);
 
   return (
-    <div className={css.trend}>
-      <div className={css.trend__title}>Trending today</div>
-      {/* {isLoading && <Loader />} */}
-      {/* {isError && <ErrorMessage />} */}
-      {movies.length > 0 && <Carousel movies={movies} />}
+    <div className={css.background}>
+      <div className={"container"}>
+        <div className={css.trend}>
+          <div className={css.trend__title}>Trending today</div>
+          {/* {isLoading && <Loader />} */}
+          {/* {isError && <ErrorMessage />} */}
+          {movies.length > 0 && <Carousel movies={movies} />}
+        </div>
+      </div>
     </div>
   );
 }

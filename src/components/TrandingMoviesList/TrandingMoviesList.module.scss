@@ -1,5 +1,10 @@
-.trend{
-  &__title{
+.background {
+  backdrop-filter: blur(10px);
+  background: var(--col);
+}
+
+.trend {
+  &__title {
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 20px;

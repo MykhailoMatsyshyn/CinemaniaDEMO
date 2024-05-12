@@ -23,7 +23,7 @@ export const getTrendingMovies = async () => {
 };
 
 export const getUpcomingMovies = async () => {
-  const url = `/movie/upcoming?api_key=${API_KEY}&region=UA&language=en-US&page=1`;
+  const url = `/movie/upcoming?api_key=${API_KEY}&region=US&language=en-US&page=1`;
   const response = await axios.get(url, options);
   return response.data;
 };
