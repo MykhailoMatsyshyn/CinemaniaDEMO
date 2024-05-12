@@ -47,7 +47,7 @@ const Catalog = () => {
     <div>
       {/* {loading && <p>Loading...</p>} */}
       {/* {error && <p>Error: {error}</p>} */}
-      <MoviesList movies={movies} />
+      <MoviesList movies={movies} info={"catalog"} />
     </div>
   );
 };
