@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import css from "./MovieList.module.css";
+import css from "./MovieList.module.scss";
 
 /*======================================================================*/
 
@@ -11,7 +11,7 @@ export default function MovieList({ movies, info }) {
   console.log(movies);
 
   return (
-    <ul className={css.list}>
+    <div className={css.list}>
       {movies.map(
         ({
           original_title,
@@ -21,7 +21,7 @@ export default function MovieList({ movies, info }) {
           genre_ids,
           vote_average,
         }) => (
-          <li key={id} className={css.item}>
+          <div key={id} className={css.item}>
             <Link
               to={`/movies/${id}`}
               state={{ from: location }}
@@ -54,9 +54,9 @@ export default function MovieList({ movies, info }) {
                 )}
               </div>
             </Link>
-          </li>
+          </div>
         )
       )}
-    </ul>
+    </div>
   );
 }

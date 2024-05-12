@@ -1,0 +1,33 @@
+.carousel {
+  width: 100%;
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.slide {
+  position: relative; /* Додано абсолютне позиціонування */
+  width: 100%;
+  height: 100%;
+  img {
+    border-radius: 10px;
+    width: 145px;
+    height: 200px;
+  }
+}
+
+.rate {
+  position: absolute; /* Зроблено абсолютним */
+  right: 8px; /* Вирівняно праворуч */
+  bottom: 0; /* Вирівняно внизу */
+  display: block;
+  width: 40px;
+  height: 20px;
+  background: var(--dark-red);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--white);
+  text-align: center; /* Додано вирівнювання тексту по центру */
+  line-height: 20px;
+  border-radius: 10px;
+}
