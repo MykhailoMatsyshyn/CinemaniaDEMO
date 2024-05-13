@@ -19,18 +19,41 @@ export default function Carousel({movies, info}) {
         autoplaySpeed: 4000,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1120,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 7,
                     slidesToScroll: 2,
                     infinite: true,
                     dots: true,
                 }
             },
             {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 6,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true,
+                }
+            },
+            {
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 819,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                 }
             }
@@ -57,20 +80,17 @@ export default function Carousel({movies, info}) {
                             <div className={css.info}>
                                 {info === "upcoming" && <p>
                                     <h2>{original_title}</h2>
-                                    {release_date}
-                                </p>}
+                                        {release_date}
+                                    </p>}
                                 {info === "catalog" && (
-
                                     <p>
                                         {genre_ids.join(', ')} | {release_date.substring(0, 4)}
                                     </p>
                                 )}
                                 {info !== "upcoming" && (
-
-
                                     <span className={css.rate}>
-                                {vote_average.toFixed(1)}
-                            </span>
+                                        {vote_average.toFixed(1)}
+                                    </span>
                                 )}
                             </div>
                         </Link>
