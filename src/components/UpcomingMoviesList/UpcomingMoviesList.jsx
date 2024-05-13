@@ -29,7 +29,7 @@ export default function MoviesList() {
     <div className={css.background}>
       <div className={"container"}>
         <div className={css.trend}>
-          <div className={css.trend__title}>Upcoming</div>
+          <div className={css.trend__title}>Upcoming this month</div>
           {/* {isLoading && <Loader />} */}
           {/* {isError && <ErrorMessage />} */}
           {movies.length > 0 && <Carousel movies={movies} info="upcoming" />}
