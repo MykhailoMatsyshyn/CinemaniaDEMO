@@ -3,6 +3,7 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ScrollToTopButton from "../scroll-to-top-button/ScrollToTopButton";
 import css from "./Layout.module.scss";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Layout({ children }) {
   return (
@@ -11,7 +12,7 @@ export default function Layout({ children }) {
       <main>{children}</main>
       <Footer />
       <ScrollToTopButton />
-
+      <Analytics />
       {/* <AppBar /> */}
       {/* {children} */}
       {/* <Toaster position="top-right" reverseOrder={false} /> */}

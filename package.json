@@ -12,6 +12,7 @@
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.2.2",
+    "@vercel/analytics": "^1.2.2",
     "axios": "^1.6.8",
     "clsx": "^2.1.1",
     "react": "^18.2.0",
