@@ -1,24 +1,32 @@
-.list{
+.list {
   width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-
   padding-top: 60px;
 }
+
 .item {
   flex: 1 0 21%; /* Кожен елемент займатиме близько 21% контейнера */
   display: flex;
   flex-direction: column;
-
   position: relative;
-  img{
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-radius: 8px;
+
+  img {
+    border-top-left-radius: 5px; /* Округлення верхніх кутів зображення на 5 пікселів */
+    border-top-right-radius: 5px; /* Округлення верхніх кутів зображення на 5 пікселів */
+    transition: transform 0.3s ease; /* Додавання плавного переходу для зображення */
   }
 
+  &:hover {
+    box-shadow: 0 0 10px 8px rgba(192, 0, 0, 0.48); /* Ефект тіні при наведенні */
+    transform: scale(1.05); /* Ефект збільшення при наведенні */
+  }
 }
+
 .rate {
   position: absolute; /* Зроблено абсолютним */
   right: 10px; /* Вирівняно праворуч */
@@ -34,7 +42,8 @@
   line-height: 20px;
   border-radius: 10px;
 }
-.info{
+
+.info {
   height: 70px;
   background: var(--white);
   text-align: left;
@@ -44,18 +53,20 @@
   font-size: 16px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  &__title{
 
+  &__title {
     color: var(--black);
+    text-transform: uppercase;
   }
-  &__subtitle{
+
+  &__subtitle {
     color: var(--dark-red);
   }
 }
+
 .img {
   width: 100%; /* Змушує зображення заповнювати доступний горизонтальний простір */
 }
-
 
 .poster-list__wrap {
   text-align: center;
@@ -66,6 +77,7 @@
     flex: 1 0 46%; /* Два елемента в ряду для планшетів і мобільних */
   }
 }
+
 @media (max-width: 480px) {
   .item {
     flex: 1 0 100%; /* Один елемент в ряду для дуже малих екранів */
