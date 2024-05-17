@@ -11,35 +11,35 @@ export default function MovieList({ movies, info }) {
   console.log(movies);
 
   return (
-      <div className={css.list}>
-        {movies.map(
-            ({
-               original_title,
-               id,
-               poster_path,
-               release_date,
-               genre_ids,
-               vote_average,
-             }) => (
-                <div key={id} className={css.item}>
-                  <Link
-                      to={`/movies/${id}`}
-                      state={{ from: location }}
-                      className={css.link}
-                  >
-                    <img
-                        src={
-                          poster_path
-                              ? `https://image.tmdb.org/t/p/w200/${poster_path}`
-                              : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
-                        }
-                        alt={original_title}
-                        className={css.img}
-                        width={300}
-                        height={400}
-                    />
-                    {info !== "upcoming" && (
-                        <span className={css.rate}>
+    <div className={css.list}>
+      {movies.map(
+        ({
+          original_title,
+          id,
+          poster_path,
+          release_date,
+          genre_ids,
+          vote_average,
+        }) => (
+          <div key={id} className={css.item}>
+            <Link
+              to={`/movies/${id}`}
+              state={{ from: location }}
+              className={css.link}
+            >
+              <img
+                src={
+                  poster_path
+                    ? `https://image.tmdb.org/t/p/w400/${poster_path}`
+                    : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
+                }
+                alt={original_title}
+                className={css.img}
+                width={300}
+                height={400}
+              />
+              {info !== "upcoming" && (
+                <span className={css.rate}>
                   {vote_average.toFixed(1)}
                 </span>
                     )}

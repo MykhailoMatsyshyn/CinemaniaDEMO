@@ -17,13 +17,13 @@ export const getPopularMovies = async () => {
 };
 
 export const getTrendingMovies = async () => {
-  const url = "trending/movie/day?language=uk-UA";
+  const url = "trending/movie/day?language=en-US";
   const response = await axios.get(url, options);
   return response.data;
 };
 
 export const getUpcomingMovies = async () => {
-  const url = `/movie/upcoming?api_key=${API_KEY}&region=UA&language=uk-UA&page=1`;
+  const url = `/movie/upcoming?api_key=${API_KEY}&region=US&language=en-US&page=1`;
   const response = await axios.get(url, options);
   return response.data;
 };
