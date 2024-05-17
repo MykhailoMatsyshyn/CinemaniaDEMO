@@ -15,6 +15,9 @@
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   border-radius: 8px;
 
+  backdrop-filter: blur(10px);
+  background: var(--col);
+
   img {
     border-top-left-radius: 5px; /* Округлення верхніх кутів зображення на 5 пікселів */
     border-top-right-radius: 5px; /* Округлення верхніх кутів зображення на 5 пікселів */
