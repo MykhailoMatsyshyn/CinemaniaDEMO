@@ -2,14 +2,14 @@
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ScrollToTopButton from "../scroll-to-top-button/ScrollToTopButton";
-// import css from "./Layout.module.css";
+import css from "./Layout.module.css";
 
 export default function Layout({ children }) {
   return (
-    <div>
-      <Header/>
-      {children}
-      <Footer/>
+    <div className={css.page__container}>
+      <Header />
+      <main>{children}</main>
+      <Footer />
       <ScrollToTopButton />
 
       {/* <AppBar /> */}
