@@ -2,7 +2,7 @@
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ScrollToTopButton from "../scroll-to-top-button/ScrollToTopButton";
-import css from "./Layout.module.css";
+import css from "./Layout.module.scss";
 
 export default function Layout({ children }) {
   return (
