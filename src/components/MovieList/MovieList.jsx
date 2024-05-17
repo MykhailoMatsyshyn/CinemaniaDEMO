@@ -35,28 +35,32 @@ export default function MovieList({ movies, info }) {
                 }
                 alt={original_title}
                 className={css.img}
-                width={200}
-                height={300}
+                width={300}
+                height={400}
               />
               {info !== "upcoming" && (
-                <span className="poster-list__rate">
+                <span className={css.rate}>
                   {vote_average.toFixed(1)}
                 </span>
-              )}
-              <div className="poster-list__wrap">
-                <h2>{original_title}</h2>
-                <div className="poster-list__info"></div>
-                {info === "upcoming" && <p>{release_date}</p>}
-                {info === "catalog" && (
-                  <p>
-                    {genre_ids} | {release_date.substring(0, 4)}
-                  </p>
-                )}
-              </div>
-            </Link>
-          </div>
-        )
-      )}
-    </div>
+                    )}
+                    <div className={css.info}>
+                      <div className={css.info__title}>
+                        {original_title.length > 29
+                            ? `${original_title.substring(0, 29)}...`
+                            : original_title}
+                      </div>
+                      <div className="poster-list__info"></div>
+                      {info === "upcoming" && <p>{release_date}</p>}
+                      {info === "catalog" && (
+                          <div className={css.info__subtitle}>
+                            {genre_ids.join(", ")} | {release_date.substring(0, 4)}
+                          </div>
+                      )}
+                    </div>
+                  </Link>
+                </div>
+            )
+        )}
+      </div>
   );
 }

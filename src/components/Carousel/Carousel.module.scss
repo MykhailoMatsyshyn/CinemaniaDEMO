@@ -1,17 +1,20 @@
 .carousel {
   width: 100%;
-  border-radius: 10px;
-
+  border-radius: 8px;
+  position: relative;
   overflow: hidden;
+  padding-bottom: 20px;
 }
 
 .slide {
   position: relative; /* Додано абсолютне позиціонування */
+  height: 200px;
   width: 100%;
-  height: 100%;
   img {
-    border-radius: 10px;
-    width: 145px;
+    position: absolute;
+    right: 8px;
+    border-radius: 8px;
+    width: 142px;
     height: 200px;
   }
 }
@@ -29,5 +32,5 @@
   color: var(--white);
   text-align: center; /* Додано вирівнювання тексту по центру */
   line-height: 20px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
