@@ -117,7 +117,7 @@ export const getDetails = async (movieId) => {
 // };
 
 export const getTrailer = async (movieId) => {
-  const url = `/movie/${movieId}/videos?api_key=${API_KEY}&language=uk-UA`;
+  const url = `/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`;
   const response = await axios.get(url, options);
   return response.data.results;
 };
