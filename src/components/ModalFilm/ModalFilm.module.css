@@ -1,0 +1,114 @@
+.modalFilm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.modalFilm__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modalCard {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+}
+
+.modalFilm__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modalFilm__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modalFilm__btn-watched,
+.modalFilm__btn-queue {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalCardPrev,
+.modalCardNext {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.modalCardPrev {
+  left: 20px;
+}
+
+.modalCardNext {
+  right: 20px;
+}
+
+.modalCardPrev img,
+.modalCardNext img {
+  width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.modalCardImgThumb img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.modalCardData {
+  margin-top: 20px;
+}
+
+.modalCardDataHeading {
+  margin-bottom: 20px;
+}
+
+.modalCardList {
+  list-style: none;
+  padding: 0;
+}
+
+.modalCardListItem {
+  margin-bottom: 10px;
+}
+
+.modalCardListValue {
+  font-weight: bold;
+}
+
+.modalCardDescriptionHeading {
+  margin-top: 20px;
+}
+
+.modalCardDescription {
+  margin-top: 10px;
+}

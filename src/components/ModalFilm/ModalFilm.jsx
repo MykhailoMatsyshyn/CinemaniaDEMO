@@ -1,22 +1,65 @@
+import ModalFilmCard from "../ModalFilmCard/ModalFilmCard";
 import css from "./ModalFilm.module.css";
 
-export default function ModalFilm() {
+export default function ModalFilm({
+  movie,
+  neighbors,
+  onClose,
+  onOpen,
+  currentIndex,
+  moviesLength,
+}) {
+  // Додаємо обробник кліків на оверлей, щоб закривати модальне вікно
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const handlePrevClick = () => {
+    const newIndex = currentIndex > 0 ? currentIndex - 1 : moviesLength - 1;
+    onOpen(neighbors.prevMovie, newIndex);
+  };
+
+  const handleNextClick = () => {
+    const newIndex = currentIndex < moviesLength - 1 ? currentIndex + 1 : 0;
+    onOpen(neighbors.nextMovie, newIndex);
+  };
+
   return (
-    <section className="modal-film">
+    <section className={css.modalFilm} onClick={handleOverlayClick}>
       <h2 className="visually-hidden">Film info</h2>
-      <div className="modal-film__overlay">
-        <button type="button" className="modal-film__close"></button>
-
-        <div className="modal-card"></div>
-
-        <div className="modal-film__buttons">
-          <button type="button" className="modal-film__btn-watched">
-            add to Watched
+      <div className={css.overlay}>
+        <div className={css.modalCard} onClick={(e) => e.stopPropagation()}>
+          <button type="button" className={css.close} onClick={onClose}>
+            ×
           </button>
-          <button type="button" className="modal-film__btn-queque">
-            add to queue
-          </button>
+          <ModalFilmCard movie={movie} />
+          <div className={css.buttons}>
+            <button type="button" className={css.btnWatched}>
+              add to Watched
+            </button>
+            <button type="button" className={css.btnQueue}>
+              add to queue
+            </button>
+          </div>
         </div>
+        {neighbors.prevMovie && (
+          <div className={css.modalCardPrev} onClick={handlePrevClick}>
+            <img
+              src={`https://image.tmdb.org/t/p/w300/${neighbors.prevMovie.poster_path}`}
+              alt={neighbors.prevMovie.original_title}
+            />
+          </div>
+        )}
+        {neighbors.nextMovie && (
+          <div className={css.modalCardNext} onClick={handleNextClick}>
+            <img
+              src={`https://image.tmdb.org/t/p/w300/${neighbors.nextMovie.poster_path}`}
+              alt={neighbors.nextMovie.original_title}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

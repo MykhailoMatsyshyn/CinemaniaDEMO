@@ -104,14 +104,20 @@ export const getDetails = async (movieId) => {
   return response.data;
 };
 
-export const getCast = async (movieId) => {
-  const url = `/movie/${movieId}/credits?language=en-US`;
-  const response = await axios.get(url, options);
-  return response.data.cast;
-};
+// export const getCast = async (movieId) => {
+//   const url = `/movie/${movieId}/credits?language=en-US`;
+//   const response = await axios.get(url, options);
+//   return response.data.cast;
+// };
 
-export const getReviews = async (movieId) => {
-  const url = `/movie/${movieId}/reviews?language=en-US&page=1`;
+// export const getReviews = async (movieId) => {
+//   const url = `/movie/${movieId}/reviews?language=en-US&page=1`;
+//   const response = await axios.get(url, options);
+//   return response.data.results;
+// };
+
+export const getTrailer = async (movieId) => {
+  const url = `/movie/${movieId}/videos?api_key=${API_KEY}&language=uk-UA`;
   const response = await axios.get(url, options);
   return response.data.results;
 };

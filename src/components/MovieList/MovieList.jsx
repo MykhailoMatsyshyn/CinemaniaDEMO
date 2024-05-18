@@ -1,13 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import css from "./MovieList.module.scss";
 import { genres } from "../../constants/genres";
-
-/*======================================================================*/
+import ModalFilm from "../ModalFilm/ModalFilm";
+import ModalTrailer from "../ModalTrailer/ModalTrailer";
+import { getTrailer } from "../../API";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function MovieList({ movies, info }) {
-  const location = useLocation();
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(null);
+  const [trailerKey, setTrailerKey] = useState(null);
 
-  // Функція для отримання назв жанрів за їх номерами
   const getGenreNames = (genreIds) => {
     const genreNames = genreIds.map((id) => genres[id] || "Unknown");
     if (genreNames.length > 2) {
@@ -15,26 +18,97 @@ export default function MovieList({ movies, info }) {
     }
     return genreNames.join(", ");
   };
-  // const defaultImg = "../../images/keep-calm-poster-not-found-1.png";
 
-  console.log(movies);
+  const openModal = (movie, index) => {
+    setSelectedMovie(movie);
+    setCurrentMovieIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedMovie(null);
+    setCurrentMovieIndex(null);
+  };
+
+  const openTrailer = async (id) => {
+    try {
+      const videos = await getTrailer(id);
+      const video = videos.find((video) => video.type === "Trailer");
+      if (video) {
+        setTrailerKey(video.key);
+      } else {
+        toast.error("Trailer not found");
+      }
+    } catch (error) {
+      toast.error("Failed to fetch trailer");
+      console.error("Failed to fetch trailer", error);
+    }
+  };
+
+  const closeTrailer = () => {
+    setTrailerKey(null);
+  };
+
+  useEffect(() => {
+    if (selectedMovie || trailerKey) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [selectedMovie, trailerKey]);
+
+  const getNeighboringMovies = (index) => {
+    const prevMovie = index > 0 ? movies[index - 1] : movies[movies.length - 1];
+    const nextMovie = index < movies.length - 1 ? movies[index + 1] : movies[0];
+    return { prevMovie, nextMovie };
+  };
 
   return (
-    <div className={css.list}>
-      {movies.map(
-        ({
-          original_title,
-          id,
-          poster_path,
-          release_date,
-          genre_ids,
-          vote_average,
-        }) => (
-          <div key={id} className={css.item}>
-            <Link
-              to={`/movies/${id}`}
-              state={{ from: location }}
-              className={css.link}
+    <>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+            padding: "10px",
+          },
+        }}
+      />
+      <div className={css.list}>
+        {movies.map(
+          (
+            {
+              original_title,
+              title,
+              id,
+              poster_path,
+              release_date,
+              genre_ids,
+              vote_average,
+              overview,
+              vote_count,
+              popularity,
+            },
+            index
+          ) => (
+            <div
+              key={id}
+              className={css.item}
+              onClick={() =>
+                openModal(
+                  {
+                    original_title,
+                    poster_path,
+                    release_date,
+                    genre_ids,
+                    vote_average,
+                    vote_count,
+                    overview,
+                    popularity,
+                  },
+                  index
+                )
+              }
             >
               <img
                 src={
@@ -42,32 +116,54 @@ export default function MovieList({ movies, info }) {
                     ? `https://image.tmdb.org/t/p/w400/${poster_path}`
                     : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
                 }
-                alt={original_title}
+                alt={title}
                 className={css.img}
                 width={300}
                 height={400}
               />
-              {info !== "upcoming" && (
-                <span className={css.rate}>{vote_average.toFixed(1)}</span>
-              )}
+              <div
+                className={css.trailer}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openTrailer(id);
+                }}
+              >
+                <p>Watch trailer </p>
+                <img
+                  height="30px"
+                  width="30px"
+                  src="https://cdn.icon-icons.com/icons2/1584/PNG/512/3721679-youtube_108064.png"
+                  alt="trailer"
+                />
+              </div>
+
               <div className={css.info}>
                 <div className={css.info__title}>
-                  {original_title.length > 29
-                    ? `${original_title.substring(0, 25)}...`
-                    : original_title}
+                  {title.length > 25 ? `${title.substring(0, 25)}...` : title}
                 </div>
-                <div className="poster-list__info"></div>
-                {info === "upcoming" && <p>{release_date}</p>}
                 {info === "catalog" && (
                   <div className={css.info__subtitle}>
                     {getGenreNames(genre_ids)} | {release_date.substring(0, 4)}
                   </div>
                 )}
               </div>
-            </Link>
-          </div>
-        )
+            </div>
+          )
+        )}
+      </div>
+      {selectedMovie && (
+        <ModalFilm
+          movie={selectedMovie}
+          neighbors={getNeighboringMovies(currentMovieIndex)}
+          onClose={closeModal}
+          onOpen={openModal}
+          currentIndex={currentMovieIndex}
+          moviesLength={movies.length}
+        />
       )}
-    </div>
+      {trailerKey && (
+        <ModalTrailer videoKey={trailerKey} onClose={closeTrailer} />
+      )}
+    </>
   );
 }
