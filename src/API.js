@@ -11,19 +11,19 @@ const options = {
 };
 
 export const getPopularMovies = async () => {
-  const url = "/movie/popular?language=en-US&page=1";
+  const url = "/movie/popular?language=uk-UA&page=1";
   const response = await axios.get(url, options);
   return response.data;
 };
 
 export const getTrendingMovies = async () => {
-  const url = "trending/movie/day?language=en-US";
+  const url = "trending/movie/day?language=uk-UA";
   const response = await axios.get(url, options);
   return response.data;
 };
 
 export const getUpcomingMovies = async () => {
-  const url = `/movie/upcoming?api_key=${API_KEY}&region=US&language=en-US&page=1`;
+  const url = `/movie/upcoming?api_key=${API_KEY}&region=US&language=uk-UA&page=1`;
   const response = await axios.get(url, options);
   return response.data;
 };
@@ -72,11 +72,11 @@ export const getSearchForm = async (
     f.week = "";
   }
   let { data } = await axios.get(
-    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=en-US${f.queryFetch}&page=${page}`
+    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=uk-UA${f.queryFetch}&page=${page}`
   );
 
   console.log(
-    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=en-US${f.queryFetch}&page=${page}`
+    `${f.discover}/movie${f.week}?api_key=${API_KEY}${f.genre}${f.year}${f.sort}&language=uk-UA${f.queryFetch}&page=${page}`
   );
 
   console.log(data.results);
@@ -99,7 +99,7 @@ export const getMovieSearch = async (moviesFilter, page) => {
 };
 
 export const getDetails = async (movieId) => {
-  const url = `/movie/${movieId}?language=en-US`;
+  const url = `/movie/${movieId}?language=uk-UA`;
   const response = await axios.get(url, options);
   return response.data;
 };
@@ -117,7 +117,20 @@ export const getDetails = async (movieId) => {
 // };
 
 export const getTrailer = async (movieId) => {
-  const url = `/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`;
-  const response = await axios.get(url, options);
-  return response.data.results;
+  const url = `/movie/${movieId}/videos?api_key=${API_KEY}&language=uk-UA`;
+
+  try {
+    let response = await axios.get(url, options);
+
+    if (response.data.results.length === 0) {
+      const fallbackUrl = `/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`;
+      response = await axios.get(fallbackUrl, options);
+    }
+
+    console.log(response.data.results);
+    return response.data.results;
+  } catch (error) {
+    console.error("Failed to fetch trailer", error);
+    throw error;
+  }
 };
