@@ -1,5 +1,5 @@
 import ModalFilmCard from "../ModalFilmCard/ModalFilmCard";
-import css from "./ModalFilm.module.css";
+import css from "./ModalFilm.module.scss";
 
 export default function ModalFilm({
   movie,
@@ -28,22 +28,31 @@ export default function ModalFilm({
 
   return (
     <section className={css.modalFilm} onClick={handleOverlayClick}>
+
       <h2 className="visually-hidden">Film info</h2>
       <div className={css.overlay}>
+
         <div className={css.modalCard} onClick={(e) => e.stopPropagation()}>
-          <button type="button" className={css.close} onClick={onClose}>
+
+          <button type="button" className={css.modalCard__close} onClick={onClose}>
             ×
           </button>
+
           <ModalFilmCard movie={movie} />
+
           <div className={css.buttons}>
-            <button type="button" className={css.btnWatched}>
-              add to Watched
+            <button type="button" className={css.buttons__watched}>
+              <p className={css.buttons__text}>add to Watched</p>
             </button>
-            <button type="button" className={css.btnQueue}>
-              add to queue
+            <button type="button" className={css.buttons__queue}>
+              <p className={css.buttons__text}>add to queue</p>
             </button>
           </div>
+
         </div>
+
+
+
         {neighbors.prevMovie && (
           <div className={css.modalCardPrev} onClick={handlePrevClick}>
             <img
@@ -52,6 +61,7 @@ export default function ModalFilm({
             />
           </div>
         )}
+
         {neighbors.nextMovie && (
           <div className={css.modalCardNext} onClick={handleNextClick}>
             <img

@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
-import {Link, useLocation} from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import css from './Carousel.module.scss';
+import ModalFilm from '../ModalFilm/ModalFilm';
+import ModalTrailer from '../ModalTrailer/ModalTrailer';
+import { getTrailer } from '../../API';
+import toast, { Toaster } from 'react-hot-toast';
+import ModalPortal from '../ModalMortal/ModalPortal'; // імпортуємо ModalPortal
 
-export default function Carousel({movies, info}) {
-    const location = useLocation();
+export default function Carousel({ movies, info }) {
+    const [selectedMovie, setSelectedMovie] = useState(null);
+    const [currentMovieIndex, setCurrentMovieIndex] = useState(null);
+    const [trailerKey, setTrailerKey] = useState(null);
 
     const settings = {
         dots: false,
@@ -60,12 +65,80 @@ export default function Carousel({movies, info}) {
         ]
     };
 
+    const openModal = (movie, index) => {
+        setSelectedMovie(movie);
+        setCurrentMovieIndex(index);
+    };
+
+    const closeModal = () => {
+        setSelectedMovie(null);
+        setCurrentMovieIndex(null);
+    };
+
+    const openTrailer = async (id) => {
+        try {
+            const videos = await getTrailer(id);
+            const video = videos.find((video) => video.type === 'Trailer');
+            if (video) {
+                setTrailerKey(video.key);
+            } else {
+                toast.error('Trailer not found');
+            }
+        } catch (error) {
+            toast.error('Failed to fetch trailer');
+            console.error('Failed to fetch trailer', error);
+        }
+    };
+
+    const closeTrailer = () => {
+        setTrailerKey(null);
+    };
+
+    useEffect(() => {
+        if (selectedMovie || trailerKey) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [selectedMovie, trailerKey]);
+
+    const getNeighboringMovies = (index) => {
+        const prevMovie = index > 0 ? movies[index - 1] : movies[movies.length - 1];
+        const nextMovie = index < movies.length - 1 ? movies[index + 1] : movies[0];
+        return { prevMovie, nextMovie };
+    };
+
     return (
-        <div className={css.carousel}>
-            <Slider {...settings}>
-                {movies.map(({original_title, id, poster_path, release_date, genre_ids, vote_average}) => (
-                    <div className={css.slide}>
-                        <Link to={`/movies/${id}`} state={{from: location}} className={css.link}>
+        <>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                toastOptions={{
+                    style: {
+                        fontSize: '16px',
+                        padding: '10px',
+                    },
+                }}
+            />
+            <div className={css.carousel}>
+                <Slider {...settings}>
+                    {movies.map(({ original_title, id, poster_path, release_date, genre_ids, vote_average }, index) => (
+                        <div
+                            key={id}
+                            className={css.slide}
+                            onClick={() =>
+                                openModal(
+                                    {
+                                        original_title,
+                                        poster_path,
+                                        release_date,
+                                        genre_ids,
+                                        vote_average,
+                                    },
+                                    index
+                                )
+                            }
+                        >
                             <img
                                 src={
                                     poster_path
@@ -78,26 +151,42 @@ export default function Carousel({movies, info}) {
                                 height={300}
                             />
                             <div className={css.info}>
-                                {info === "upcoming" && <p>
-                                    <h2>{original_title}</h2>
+                                {info === "upcoming" && (
+                                    <p>
+                                        <h2>{original_title}</h2>
                                         {release_date}
-                                    </p>}
+                                    </p>
+                                )}
                                 {info === "catalog" && (
                                     <p>
                                         {genre_ids.join(', ')} | {release_date.substring(0, 4)}
                                     </p>
                                 )}
                                 {info !== "upcoming" && (
-                                    <span className={css.rate}>
-                                        {vote_average.toFixed(1)}
-                                    </span>
+                                    <span className={css.rate}>{vote_average.toFixed(1)}</span>
                                 )}
                             </div>
-                        </Link>
-                    </div>
-
-                ))}
-            </Slider>
-        </div>
+                        </div>
+                    ))}
+                </Slider>
+            </div>
+            {selectedMovie && (
+                <ModalPortal>
+                    <ModalFilm
+                        movie={selectedMovie}
+                        neighbors={getNeighboringMovies(currentMovieIndex)}
+                        onClose={closeModal}
+                        onOpen={openModal}
+                        currentIndex={currentMovieIndex}
+                        moviesLength={movies.length}
+                    />
+                </ModalPortal>
+            )}
+            {trailerKey && (
+                <ModalPortal>
+                    <ModalTrailer videoKey={trailerKey} onClose={closeTrailer} />
+                </ModalPortal>
+            )}
+        </>
     );
 }
