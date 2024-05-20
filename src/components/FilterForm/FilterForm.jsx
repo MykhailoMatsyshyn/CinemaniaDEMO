@@ -25,21 +25,18 @@ export default function FilterForm({ onSubmit }) {
   const [isFocused, setIsFocused] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
 
-  // const value = useSelector(selectNameFilter);
-  // const author = useSelector(selectAuthorFilter);
+  const dispatch = useDispatch();
+  const nameFilter = useSelector(selectNameFilter);
+  const authorFilter = useSelector(selectAuthorFilter);
+  const genreFilter = useSelector(selectGenreFilter);
+  const yearFilter = useSelector(selectYearFilter);
+  const sortingFilter = useSelector(selectSortingFilter);
 
- const dispatch = useDispatch();
- const nameFilter = useSelector(selectNameFilter);
- const authorFilter = useSelector(selectAuthorFilter);
- const genreFilter = useSelector(selectGenreFilter);
- const yearFilter = useSelector(selectYearFilter);
- const sortingFilter = useSelector(selectSortingFilter);
-
- const [localQuery, setLocalQuery] = useState(nameFilter);
- const [localGenre, setLocalGenre] = useState(genreFilter);
- const [localYear, setLocalYear] = useState(yearFilter);
- const [localSorting, setLocalSorting] = useState(sortingFilter);
- const [localAuthor, setLocalAuthor] = useState(authorFilter);
+  const [localQuery, setLocalQuery] = useState(nameFilter);
+  const [localGenre, setLocalGenre] = useState(genreFilter);
+  const [localYear, setLocalYear] = useState(yearFilter);
+  const [localSorting, setLocalSorting] = useState(sortingFilter);
+  const [localAuthor, setLocalAuthor] = useState(authorFilter);
 
   useEffect(() => {
     setLocalQuery(nameFilter);

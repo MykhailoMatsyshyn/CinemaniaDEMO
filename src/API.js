@@ -126,10 +126,17 @@ export const getSearchForm = async (
 
     // Якщо задано параметри пошуку, використовуємо відповідні запити
     if (query) {
+      // Збираємо параметри запиту
+      const queryString = [
+        genre && `with_genres=${genre}`,
+        year && `primary_release_year=${year}`,
+        sort && `sort_by=${sort}`,
+      ]
+        .filter(Boolean)
+        .join("&");
+
       const searchResponse = await axios.get(
-        `${searchUrl}${genre ? `&with_genres=${genre}` : ""}${
-          year ? `&primary_release_year=${year}` : ""
-        }${sort ? `&sort_by=${sort}` : ""}`,
+        `${searchUrl}&${queryString}`,
         options
       );
 
