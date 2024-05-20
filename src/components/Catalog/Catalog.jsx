@@ -7,6 +7,7 @@ import {
   selectYearFilter,
   selectSortingFilter,
   selectCurrentPage,
+  selectAuthorFilter,
 } from "../../redux/filters/selectors";
 import { getSearchForm } from "../../API";
 import { setTotalPages } from "../../redux/filters/slice";
@@ -21,6 +22,7 @@ const Catalog = () => {
   const year = useSelector(selectYearFilter);
   const sort = useSelector(selectSortingFilter);
   const page = useSelector(selectCurrentPage);
+  const author = useSelector(selectAuthorFilter);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -32,21 +34,28 @@ const Catalog = () => {
         // const genre = "";
         // const year = "";
         // const sort = "";
-        const dataMovie = await getSearchForm(page, query, genre, year, sort);
+        const dataMovie = await getSearchForm(
+          page,
+          query,
+          genre,
+          year,
+          sort,
+          author
+        );
         console.log(dataMovie);
         console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
 
         setMovies(dataMovie.results);
         dispatch(setTotalPages(dataMovie.total_pages));
       } catch (error) {
-        // setError(true);
+        console.error("Failed to fetch movies", error);
       } finally {
         // setLoading(false);
       }
     };
 
     fetchMovies();
-  }, [query, genre, year, sort, page, dispatch]);
+  }, [query, genre, year, sort, page, author, dispatch]);
 
   return (
     <div>

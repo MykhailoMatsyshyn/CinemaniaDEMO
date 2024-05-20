@@ -4,7 +4,7 @@ import { genres } from "../../constants/genres";
 import ModalFilm from "../ModalFilm/ModalFilm";
 import ModalTrailer from "../ModalTrailer/ModalTrailer";
 import { getTrailer } from "../../API";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function MovieList({ movies, info }) {
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -64,16 +64,6 @@ export default function MovieList({ movies, info }) {
 
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            fontSize: "16px",
-            padding: "10px",
-          },
-        }}
-      />
       <div className={css.list}>
         {movies.map(
           (

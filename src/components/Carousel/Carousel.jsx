@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,7 +6,7 @@ import css from './Carousel.module.scss';
 import ModalFilm from '../ModalFilm/ModalFilm';
 import ModalTrailer from '../ModalTrailer/ModalTrailer';
 import { getTrailer } from '../../API';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import ModalPortal from '../ModalMortal/ModalPortal'; // імпортуємо ModalPortal
 
 export default function Carousel({ movies, info }) {
@@ -110,16 +110,6 @@ export default function Carousel({ movies, info }) {
 
     return (
         <>
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-                toastOptions={{
-                    style: {
-                        fontSize: '16px',
-                        padding: '10px',
-                    },
-                }}
-            />
             <div className={css.carousel}>
                 <Slider {...settings}>
                     {movies.map(({ original_title, id, poster_path, release_date, genre_ids, vote_average }, index) => (

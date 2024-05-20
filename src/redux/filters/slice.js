@@ -10,6 +10,7 @@ const filtersSlice = createSlice({
     genre: "",
     year: "",
     sorting: "",
+    author: "",
   },
   reducers: {
     setCurrentPage(state, action) {
@@ -33,6 +34,9 @@ const filtersSlice = createSlice({
     changeSorting(state, action) {
       state.sorting = action.payload !== "start" ? action.payload : "";
     },
+    changeAuthor(state, action) {
+      state.author = action.payload !== "" ? action.payload : "";
+    },
     changeCurrentPages(state, action) {
       state.current_page = action.payload;
     },
@@ -48,5 +52,6 @@ export const {
   changeYear,
   changeSorting,
   changeCurrentPages,
+  changeAuthor,
 } = filtersSlice.actions;
 export default filtersSlice.reducer;

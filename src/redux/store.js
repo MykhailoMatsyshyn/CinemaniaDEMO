@@ -21,15 +21,25 @@ const moviesPersistConfig = {
   whitelist: ["items"],
 };
 
+const filtersPersistConfig = {
+  key: "filters",
+  storage,
+};
+
 const persistedMoviesReducer = persistReducer(
   moviesPersistConfig,
   moviesReducer
 );
 
+const persistedFiltersReducer = persistReducer(
+  filtersPersistConfig,
+  filtersReducer
+);
+
 export const store = configureStore({
   reducer: {
     movies: persistedMoviesReducer,
-    filters: filtersReducer,
+    filters: persistedFiltersReducer,
     library: libraryReducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -1,4 +1,4 @@
-// import { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ScrollToTopButton from "../scroll-to-top-button/ScrollToTopButton";
@@ -15,7 +15,16 @@ export default function Layout({ children }) {
       <Analytics />
       {/* <AppBar /> */}
       {/* {children} */}
-      {/* <Toaster position="top-right" reverseOrder={false} /> */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+            padding: "10px",
+          },
+        }}
+      />
     </div>
   );
 }

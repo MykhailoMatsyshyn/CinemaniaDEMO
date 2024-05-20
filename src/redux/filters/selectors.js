@@ -2,6 +2,10 @@ export const selectNameFilter = (state) => {
   return state.filters.name;
 };
 
+export const selectAuthorFilter = (state) => {
+  return state.filters.author;
+};
+
 export const selectGenreFilter = (state) => {
   return state.filters.genre;
 };
