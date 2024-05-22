@@ -24,7 +24,7 @@ export default function AppBar() {
         <div className={css.bar__col}>
           <Navigation />
 
-          {/* <AuthNav/> */}
+          <AuthNav/>
         </div>
       </div>
       {/* {!isRefreshing && <div> {isLoggedIn ? <UserMenu /> : <AuthNav />}</div>} */}

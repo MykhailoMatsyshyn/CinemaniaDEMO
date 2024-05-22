@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+// src/components/MovieList/MovieList.js
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import css from "./MovieList.module.scss";
 import { genres } from "../../constants/genres";
 import ModalFilm from "../ModalFilm/ModalFilm";
@@ -6,7 +8,7 @@ import ModalTrailer from "../ModalTrailer/ModalTrailer";
 import { getTrailer } from "../../API";
 import toast from "react-hot-toast";
 
-export default function MovieList({ movies, info }) {
+const MovieList = ({ movies = [], info }) => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(null);
   const [trailerKey, setTrailerKey] = useState(null);
@@ -65,80 +67,95 @@ export default function MovieList({ movies, info }) {
   return (
     <>
       <div className={css.list}>
-        {movies.map(
-          (
-            {
-              original_title,
-              title,
-              id,
-              poster_path,
-              release_date,
-              genre_ids,
-              vote_average,
-              overview,
-              vote_count,
-              popularity,
-            },
-            index
-          ) => (
-            <div
-              key={id}
-              className={css.item}
-              onClick={() =>
-                openModal(
-                  {
-                    original_title,
-                    poster_path,
-                    release_date,
-                    genre_ids,
-                    vote_average,
-                    vote_count,
-                    overview,
-                    popularity,
-                  },
-                  index
-                )
-              }
-            >
-              <img
-                src={
-                  poster_path
-                    ? `https://image.tmdb.org/t/p/w400/${poster_path}`
-                    : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
-                }
-                alt={title}
-                className={css.img}
-                width={300}
-                height={400}
-              />
+        {movies && movies.length > 0 ? (
+          movies.map(
+            (
+              {
+                original_title,
+                title,
+                id,
+                poster_path,
+                release_date,
+                genre_ids,
+                vote_average,
+                overview,
+                vote_count,
+                popularity,
+                adult,
+                backdrop_path,
+                original_language,
+                video,
+              },
+              index
+            ) => (
               <div
-                className={css.trailer}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openTrailer(id);
-                }}
+                key={id}
+                className={css.item}
+                onClick={() =>
+                  openModal(
+                    {
+                      original_title,
+                      title,
+                      id,
+                      poster_path,
+                      release_date,
+                      genre_ids,
+                      vote_average,
+                      overview,
+                      vote_count,
+                      popularity,
+                      adult,
+                      backdrop_path,
+                      original_language,
+                      video,
+                    },
+                    index
+                  )
+                }
               >
-                <p>Watch trailer </p>
                 <img
-                  height="30px"
-                  width="30px"
-                  src="https://cdn.icon-icons.com/icons2/1584/PNG/512/3721679-youtube_108064.png"
-                  alt="trailer"
+                  src={
+                    poster_path
+                      ? `https://image.tmdb.org/t/p/w400/${poster_path}`
+                      : `https://i.ibb.co/GPMFHG6/keep-calm-poster-not-found-1.png`
+                  }
+                  alt={title}
+                  className={css.img}
+                  width={300}
+                  height={400}
                 />
-              </div>
-
-              <div className={css.info}>
-                <div className={css.info__title}>
-                  {title.length > 25 ? `${title.substring(0, 25)}...` : title}
+                <div
+                  className={css.trailer}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openTrailer(id);
+                  }}
+                >
+                  <p>Watch trailer </p>
+                  <img
+                    height="30px"
+                    width="30px"
+                    src="https://cdn.icon-icons.com/icons2/1584/PNG/512/3721679-youtube_108064.png"
+                    alt="trailer"
+                  />
                 </div>
-                {info === "catalog" && (
-                  <div className={css.info__subtitle}>
-                    {getGenreNames(genre_ids)} | {release_date.substring(0, 4)}
+
+                <div className={css.info}>
+                  <div className={css.info__title}>
+                    {title.length > 25 ? `${title.substring(0, 25)}...` : title}
                   </div>
-                )}
+                  {info === "catalog" && (
+                    <div className={css.info__subtitle}>
+                      {getGenreNames(genre_ids)} |{" "}
+                      {release_date.substring(0, 4)}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )
           )
+        ) : (
+          <p>No movies to display</p>
         )}
       </div>
       {selectedMovie && (
@@ -156,4 +173,11 @@ export default function MovieList({ movies, info }) {
       )}
     </>
   );
-}
+};
+
+MovieList.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  info: PropTypes.string,
+};
+
+export default MovieList;

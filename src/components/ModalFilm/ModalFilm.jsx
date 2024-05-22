@@ -1,3 +1,12 @@
+// src/components/ModalFilm/ModalFilm.js
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWatched,
+  removeFromWatched,
+  addToQueue,
+  removeFromQueue,
+} from "../../redux/movies/moviesActions";
 import ModalFilmCard from "../ModalFilmCard/ModalFilmCard";
 import css from "./ModalFilm.module.scss";
 
@@ -9,7 +18,21 @@ export default function ModalFilm({
   currentIndex,
   moviesLength,
 }) {
-  // Додаємо обробник кліків на оверлей, щоб закривати модальне вікно
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const watched = useSelector((state) => state.movies.watched);
+  const queue = useSelector((state) => state.movies.queue);
+
+  const [isWatched, setIsWatched] = useState(false);
+  const [isInQueue, setIsInQueue] = useState(false);
+
+  useEffect(() => {
+    const movieWatched = watched.some((m) => m.id === movie.id);
+    const movieInQueue = queue.some((m) => m.id === movie.id);
+    setIsWatched(movieWatched);
+    setIsInQueue(movieInQueue);
+  }, [watched, queue, movie]);
+
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -26,32 +49,68 @@ export default function ModalFilm({
     onOpen(neighbors.nextMovie, newIndex);
   };
 
+  const handleAddToWatched = () => {
+    if (!user) {
+      alert("Please log in to add to Watched list");
+      return;
+    }
+    if (isWatched) {
+      dispatch(removeFromWatched(movie.id));
+    } else {
+      console.log("Adding to watched:", movie); // Додаємо логування для перевірки даних фільму
+      dispatch(addToWatched(movie));
+    }
+  };
+
+  const handleAddToQueue = () => {
+    if (!user) {
+      alert("Please log in to add to Queue");
+      return;
+    }
+    if (isInQueue) {
+      dispatch(removeFromQueue(movie.id));
+    } else {
+      console.log("Adding to queue:", movie); // Додаємо логування для перевірки даних фільму
+      dispatch(addToQueue(movie));
+    }
+  };
+
   return (
     <section className={css.modalFilm} onClick={handleOverlayClick}>
-
       <h2 className="visually-hidden">Film info</h2>
       <div className={css.overlay}>
-
         <div className={css.modalCard} onClick={(e) => e.stopPropagation()}>
-
-          <button type="button" className={css.modalCard__close} onClick={onClose}>
+          <button
+            type="button"
+            className={css.modalCard__close}
+            onClick={onClose}
+          >
             ×
           </button>
 
           <ModalFilmCard movie={movie} />
 
           <div className={css.buttons}>
-            <button type="button" className={css.buttons__watched}>
-              <p className={css.buttons__text}>add to Watched</p>
+            <button
+              type="button"
+              className={css.buttons__watched}
+              onClick={handleAddToWatched}
+            >
+              <p className={css.buttons__text}>
+                {isWatched ? "Remove from Watched" : "Add to Watched"}
+              </p>
             </button>
-            <button type="button" className={css.buttons__queue}>
-              <p className={css.buttons__text}>add to queue</p>
+            <button
+              type="button"
+              className={css.buttons__queue}
+              onClick={handleAddToQueue}
+            >
+              <p className={css.buttons__text}>
+                {isInQueue ? "Remove from Queue" : "Add to Queue"}
+              </p>
             </button>
           </div>
-
         </div>
-
-
 
         {neighbors.prevMovie && (
           <div className={css.modalCardPrev} onClick={handlePrevClick}>

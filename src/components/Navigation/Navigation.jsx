@@ -1,4 +1,5 @@
-
+// src/components/Navigation.js
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import css from "./Navigation.module.scss";
 import clsx from "clsx";
@@ -8,6 +9,8 @@ const makeLinkClass = ({ isActive }) => {
 };
 
 export default function Navigation() {
+  const user = useSelector((state) => state.auth.user);
+
   return (
     <nav className={css.nav}>
       <div className={css.nav__item}>
@@ -15,11 +18,13 @@ export default function Navigation() {
           <div className={css.nav__button}>Home</div>
         </NavLink>
       </div>
-      <div className={css.nav__item}>
-        <NavLink className={makeLinkClass} to="/library">
-          <div className={css.nav__button}>My Library</div>
-        </NavLink>
-      </div>
+      {user && (
+        <div className={css.nav__item}>
+          <NavLink className={makeLinkClass} to="/library">
+            <div className={css.nav__button}>My Library</div>
+          </NavLink>
+        </div>
+      )}
     </nav>
   );
 }

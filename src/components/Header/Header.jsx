@@ -16,7 +16,6 @@ export default function Header() {
                     {location.pathname === "/library" && <LibrarySwitcher/>}
                 </div>
             </div>
-            {/* Фільтрація / пошук АБО переглянуті / черга*/}
         </header>
     );
 }
