@@ -21,7 +21,7 @@ export default function ModalFilmCard({ movie }) {
             <p className={css["modalCard__list-label"]}>Vote / Votes</p>
             <p className={css["modalCard__list-value"]}>
               <span className={css["modalCard__rate"]}>
-                {movie.vote_average}
+                {movie.vote_average.toFixed(1)}
               </span>{" "}
               / {movie.vote_count}
             </p>
@@ -43,6 +43,7 @@ export default function ModalFilmCard({ movie }) {
             <p className={css["modalCard__list-label"]}>Genre</p>
             <p className={css["modalCard__list-value"]}>
               {movie.genre_ids.map((id) => genres[id]).join(", ")}
+
             </p>
           </li>
         </ul>

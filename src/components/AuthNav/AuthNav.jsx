@@ -1,5 +1,5 @@
-// src/components/AuthNav.js
-import React, { useEffect } from "react";
+// src/components/AuthNav.jsx
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import css from "./AuthNav.module.scss";
 import clsx from "clsx";
@@ -17,8 +17,8 @@ export default function AuthNav() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
-  const [logPopupVisible, setLogPopupVisible] = React.useState(false);
-  const [regPopupVisible, setRegPopupVisible] = React.useState(false);
+  const [logPopupVisible, setLogPopupVisible] = useState(false);
+  const [regPopupVisible, setRegPopupVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -44,47 +44,51 @@ export default function AuthNav() {
   };
 
   return (
-    <div className={css.auth}>
-      {user ? (
-        <button className={css.auth__button} onClick={handleLogout}>
-          Вийти
-        </button>
-      ) : (
-        <>
-          <div className={css.auth__item}>
-            <button
-              className={makeLinkClass}
-              onClick={() => setLogPopupVisible(true)}
-            >
-              Увійти
+      <div className={css.auth}>
+        {user ? (
+            <div className={css.auth__item}>
+
+            <button className={css.auth__button} onClick={handleLogout}>
+              Log out
             </button>
-            <MyModal visible={logPopupVisible} setVisible={setLogPopupVisible}>
-              <LoginForm
-                setVisibleReg={setRegPopupVisible}
-                setVisibleLog={setLogPopupVisible}
-              />
-            </MyModal>
-          </div>
-          <div className={css.auth__item}>
-            <button
-              className={makeLinkClass}
-              onClick={() => setRegPopupVisible(true)}
-            >
-              Зареєструватися
-            </button>
-            <MyModal
-              visible={regPopupVisible}
-              setVisible={setRegPopupVisible}
-              width="670px"
-            >
-              <RegistrationForm
-                setVisibleReg={setRegPopupVisible}
-                setVisibleLog={setLogPopupVisible}
-              />
-            </MyModal>
-          </div>
-        </>
-      )}
-    </div>
+            </div>
+        ) : (
+            <>
+              <div className={css.auth__item}>
+                <button
+                    className={makeLinkClass}
+                    onClick={() => setLogPopupVisible(true)}
+                >
+                  Log In
+                </button>
+
+                <MyModal visible={logPopupVisible} setVisible={setLogPopupVisible}>
+                  <LoginForm
+                      setVisibleReg={setRegPopupVisible}
+                      setVisibleLog={setLogPopupVisible}
+                  />
+                </MyModal>
+              </div>
+              <div className={css.auth__item}>
+                <button
+                    className={makeLinkClass}
+                    onClick={() => setRegPopupVisible(true)}
+                >
+                  Sign Up
+                </button>
+
+                <MyModal
+                    visible={regPopupVisible}
+                    setVisible={setRegPopupVisible}
+                >
+                  <RegistrationForm
+                      setVisibleReg={setRegPopupVisible}
+                      setVisibleLog={setLogPopupVisible}
+                  />
+                </MyModal>
+              </div>
+            </>
+        )}
+      </div>
   );
 }

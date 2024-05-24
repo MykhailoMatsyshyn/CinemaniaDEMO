@@ -82,14 +82,14 @@
 .list {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
   padding-top: 60px;
 }
 
 .item {
-  flex: 1 0 21%; /* Кожен елемент займатиме близько 21% контейнера */
+  flex: 0 0 23.5%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -159,12 +159,12 @@
 
 @media (max-width: 768px) {
   .item {
-    flex: 1 0 46%; /* Два елемента в ряду для планшетів і мобільних */
+    flex: 0 0 46%; /* Два елемента в ряду для планшетів і мобільних */
   }
 }
 
 @media (max-width: 480px) {
   .item {
-    flex: 1 0 100%; /* Один елемент в ряду для дуже малих екранів */
+    flex: 0 0 100%; /* Один елемент в ряду для дуже малих екранів */
   }
 }
