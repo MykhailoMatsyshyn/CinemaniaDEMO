@@ -25,7 +25,7 @@ export default function MyLibraryPage() {
   return (
     <div className={css.library}>
       <div className={"container"}>
-        {movies.length > 0 ? <MovieList movies={movies} /> : <EmptyList />}
+        {movies.length > 0 ? <MovieList movies={movies}  info={"catalog"} /> : <EmptyList />}
       </div>
     </div>
   );

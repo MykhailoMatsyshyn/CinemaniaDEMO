@@ -148,6 +148,8 @@ const MovieList = ({ movies = [], info }) => {
                     <div className={css.info__subtitle}>
                       {getGenreNames(genre_ids)} |{" "}
                       {release_date.substring(0, 4)}
+                      <span className={css.rate}>{vote_average.toFixed(1)}</span>
+
                     </div>
                   )}
                 </div>

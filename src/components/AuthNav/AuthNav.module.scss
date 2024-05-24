@@ -15,10 +15,21 @@
     height: 22px;
     border-radius: 7px;
     border: 2px solid var(--dark-red);
+    margin-right: 20px;
+
+
     &:hover{
       background: var(--dark-red);
     }
-    margin-left: 20px;
+    &:last-child{
+      width: 120px;
+      margin-right: 0;
+    }
+    > button{
+      color: var(--white);
+      background: transparent;
+    }
+
   }
   &__button{
     color: var(--white);

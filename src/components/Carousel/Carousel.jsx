@@ -150,11 +150,13 @@ export default function Carousel({ movies, info }) {
                                 {info === "catalog" && (
                                     <p>
                                         {genre_ids.join(', ')} | {release_date.substring(0, 4)}
+
                                     </p>
                                 )}
                                 {info !== "upcoming" && (
                                     <span className={css.rate}>{vote_average.toFixed(1)}</span>
                                 )}
+
                             </div>
                         </div>
                     ))}
