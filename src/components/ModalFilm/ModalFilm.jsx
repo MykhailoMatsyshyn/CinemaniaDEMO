@@ -77,7 +77,6 @@ export default function ModalFilm({
 
   return (
     <section className={css.modalFilm} onClick={handleOverlayClick}>
-      <h2 className="visually-hidden">Film info</h2>
       <div className={css.overlay}>
         <div className={css.modalCard} onClick={(e) => e.stopPropagation()}>
           <button
