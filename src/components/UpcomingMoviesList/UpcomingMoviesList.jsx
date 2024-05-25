@@ -13,7 +13,7 @@ export default function MoviesList() {
       try {
         // setLoading(true);
         const data = await getUpcomingMovies();
-        console.log(data);
+        // console.log(data);
         setMovies(data.results);
       } catch (error) {
         // setError(true);

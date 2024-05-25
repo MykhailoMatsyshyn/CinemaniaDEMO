@@ -11,7 +11,7 @@ export const addToWatched = (movie) => async (dispatch) => {
 
   const db = getDatabase();
   const movieRef = ref(db, `users/${user.uid}/watched/${movie.id}`);
-  console.log("Adding movie to watched:", movie); // Додаємо логування для перевірки даних фільму
+  // console.log("Adding movie to watched:", movie); // Додаємо логування для перевірки даних фільму
   await set(movieRef, movie);
   dispatch({ type: "ADD_TO_WATCHED", payload: movie });
 };
@@ -38,7 +38,7 @@ export const addToQueue = (movie) => async (dispatch) => {
 
   const db = getDatabase();
   const movieRef = ref(db, `users/${user.uid}/queue/${movie.id}`);
-  console.log("Adding movie to queue:", movie); // Додаємо логування для перевірки даних фільму
+  // console.log("Adding movie to queue:", movie); // Додаємо логування для перевірки даних фільму
   await set(movieRef, movie);
   dispatch({ type: "ADD_TO_QUEUE", payload: movie });
 };

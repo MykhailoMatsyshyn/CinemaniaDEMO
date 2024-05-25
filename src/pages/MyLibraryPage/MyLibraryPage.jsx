@@ -12,7 +12,7 @@ export default function MyLibraryPage() {
 
   const [movies, setMovies] = useState([]);
 
-  console.log("movies list", movies);
+  // console.log("movies list", movies);
 
   useEffect(() => {
     if (activeTab === "WATCHED") {

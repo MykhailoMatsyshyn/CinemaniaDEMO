@@ -71,14 +71,22 @@
   cursor: pointer;
 }
 
+.overlay {
+  // display: flex;
+  // justify-content: space-between;
+
+  // padding: 48px 30px 42px 24px;
+  // max-width: 882px;
+}
+
 .modalCardPrev {
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
 
   position: absolute;
   z-index: 10;
-  right: 70%;
-  top: calc(50% - 170px);
+  right: 75%;
+  top: calc(50% - 130px);
   filter: blur(2px);
   transform: scale(0.9);
   cursor: pointer;
@@ -94,12 +102,11 @@
   justify-content: space-between;
 
   padding: 42px 30px 104px 28px;
-  max-width: 618px;
 
   position: absolute;
   z-index: 10;
-  right: 7%;
-  top: calc(50% - 170px);
+  right: 5%;
+  top: calc(50% - 165px);
   transform: scale(0.9);
   filter: blur(2px);
   // position: fixed;

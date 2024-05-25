@@ -7,7 +7,7 @@ export default function EmptyList() {
 
   return (
     <div>
-      <p>
+      <p className={css.Empty}>
         Your{" "}
         {activeTab.charAt(0).toUpperCase() + activeTab.slice(1).toLowerCase()}{" "}
         list is empty!

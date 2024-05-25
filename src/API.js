@@ -359,7 +359,7 @@ export const getTrailer = async (movieId) => {
       response = await axios.get(fallbackUrl, options);
     }
 
-    console.log(response.data.results);
+    // console.log(response.data.results);
     return response.data.results;
   } catch (error) {
     console.error("Failed to fetch trailer", error);

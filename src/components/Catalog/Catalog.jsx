@@ -28,7 +28,7 @@ const Catalog = () => {
     const fetchMovies = async () => {
       try {
         // setLoading(true);
-        console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
+        // console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
         // const page = "";
         // const query = "";
         // const genre = "";
@@ -42,8 +42,8 @@ const Catalog = () => {
           sort,
           author
         );
-        console.log(dataMovie);
-        console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
+        // console.log(dataMovie);
+        // console.log("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
 
         setMovies(dataMovie.results);
         dispatch(setTotalPages(dataMovie.total_pages));

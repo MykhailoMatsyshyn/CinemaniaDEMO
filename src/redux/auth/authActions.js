@@ -82,10 +82,10 @@ export const createNote = (user, queue, watched) => async (dispatch) => {
       queue,
       watched,
     });
-    console.log("Note created for user:", user.uid); // Виведення повідомлення після створення запису
+    // console.log("Note created for user:", user.uid); // Виведення повідомлення після створення запису
     dispatch({ type: "CREATE_NOTE_SUCCESS" });
   } catch (error) {
-    console.error("Create note error:", error.message); // Виведення помилки створення запису
+    // console.error("Create note error:", error.message); // Виведення помилки створення запису
     dispatch({ type: "CREATE_NOTE_FAIL", payload: error.message });
   }
 };
@@ -94,14 +94,14 @@ export const readNote = (user) => async (dispatch) => {
   try {
     const snapshot = await get(child(ref(database), `galleries/${user.uid}`));
     if (snapshot.exists()) {
-      console.log("Note data:", snapshot.val()); // Виведення даних запису
+      // console.log("Note data:", snapshot.val()); // Виведення даних запису
       dispatch({ type: "READ_NOTE_SUCCESS", payload: snapshot.val() });
     } else {
-      console.log("No data available for user:", user.uid); // Виведення повідомлення, якщо дані відсутні
+      // console.log("No data available for user:", user.uid); // Виведення повідомлення, якщо дані відсутні
       dispatch({ type: "READ_NOTE_FAIL", payload: "No data available" });
     }
   } catch (error) {
-    console.error("Read note error:", error.message); // Виведення помилки читання запису
+    // console.error("Read note error:", error.message); // Виведення помилки читання запису
     dispatch({ type: "READ_NOTE_FAIL", payload: error.message });
   }
 };
